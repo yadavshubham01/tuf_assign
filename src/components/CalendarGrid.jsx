@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getDaysInMonth, getFirstDayOfMonth } from "../utils/dateUtils";
 
-const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const CalendarGrid = ({
   currentDate,
@@ -9,9 +9,8 @@ const CalendarGrid = ({
   range,
   hoverDate,
   setHoverDate,
-  notesMap = {}
+  notesMap = {},
 }) => {
-
   const { month, year } = currentDate;
   const totalDays = getDaysInMonth(year, month);
   const firstDay = getFirstDayOfMonth(year, month);
@@ -27,60 +26,58 @@ const CalendarGrid = ({
   }
 
   const parseDate = (str) => {
-  const [y, m, d] = str.split("-").map(Number);
-  return new Date(y, m - 1, d);
+    const [y, m, d] = str.split("-").map(Number);
+    return new Date(y, m - 1, d);
   };
 
   // Helpers
   const isInRange = (date) => {
-  if (!range.start || !range.end) return false;
+    if (!range.start || !range.end) return false;
 
-  const d = parseDate(date);
-  const s = parseDate(range.start);
-  const e = parseDate(range.end);
+    const d = parseDate(date);
+    const s = parseDate(range.start);
+    const e = parseDate(range.end);
 
-  return d > s && d < e;
-};
+    return d > s && d < e;
+  };
 
   const isPreview = (date) => {
     if (!range.start || range.end || !hoverDate) return false;
     const d = parseDate(date);
-     const s = parseDate(range.start);
-     const hd= parseDate(hoverDate);
+    const s = parseDate(range.start);
+    const hd = parseDate(hoverDate);
     return d > s && d < hd;
   };
 
-
   // Get note for date
- const getNoteForDate = (date) => {
-  const d = parseDate(date);
+  const getNoteForDate = (date) => {
+    const d = parseDate(date);
 
-  for (let key in notesMap) {
+    for (let key in notesMap) {
+      // RANGE NOTE
+      if (key.includes("_")) {
+        const [start, end] = key.split("_");
 
-    // RANGE NOTE
-    if (key.includes("_")) {
-      const [start, end] = key.split("_");
+        const s = parseDate(start);
+        const e = parseDate(end);
 
-      const s = parseDate(start);
-      const e = parseDate(end);
+        if (d >= s && d <= e) {
+          return notesMap[key];
+        }
+      }
 
-      if (d >= s && d <= e) {
-        return notesMap[key];
+      // MONTH NOTE
+      else {
+        const [y, m] = key.split("-").map(Number);
+
+        if (y === year && m === month + 1) {
+          return notesMap[key];
+        }
       }
     }
 
-    // MONTH NOTE
-    else {
-      const [y, m] = key.split("-").map(Number);
-
-      if (y === year && m === month + 1) {
-        return notesMap[key];
-      }
-    }
-  }
-
-  return null;
-};
+    return null;
+  };
   // Days
   for (let day = 1; day <= totalDays; day++) {
     const dateKey = `${year}-${month + 1}-${day}`;
@@ -130,14 +127,15 @@ const CalendarGrid = ({
       >
         {day}
 
-
         {/* Tooltip */}
         {hoveredNote?.date === dateKey && (
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-36 bg-black text-white text-xs p-2 rounded shadow-lg z-50 animate-fadeIn">
+          <div
+            className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap"
+          >
             {hoveredNote.text}
           </div>
         )}
-      </div>
+      </div>,
     );
   }
 

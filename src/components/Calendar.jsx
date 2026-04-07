@@ -3,6 +3,7 @@ import ImageBanner from "./ImageBanner";
 import CalendarHeader from "./CalendarHeader";
 import CalendarGrid from "./CalendarGrid";
 import NotesPanel from "./NotesPanel";
+import { useNotes } from "../hooks/useNotes";
 
 const Calendar = () => {
   const today = new Date();
@@ -14,18 +15,8 @@ const Calendar = () => {
 
   const [range, setRange] = useState({ start: null, end: null });
   const [hoverDate, setHoverDate] = useState(null);
-  const [notesMap, setNotesMap] = useState({});
+  const {notesMap, saveNote } = useNotes();
 
-   useEffect(() => {
-    const handleStorage = () => {
-      const updated = JSON.parse(localStorage.getItem("notes-map") || "{}");
-      setNotesMap(updated);
-    };
-
-    window.addEventListener("storage", handleStorage);
-
-    return () => window.removeEventListener("storage", handleStorage);
-    }, []);
 
   const handleSelectDate = (date) => {
     if (!range.start || (range.start && range.end)) {
@@ -50,7 +41,7 @@ const Calendar = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
 
           {/* LEFT NOTES */}
-          <NotesPanel range={range} currentDate={currentDate} setNotesMap={setNotesMap}/>
+          <NotesPanel range={range} currentDate={currentDate} saveNote={saveNote}/>
 
           {/* RIGHT CALENDAR */}
           <div>
@@ -77,7 +68,7 @@ const Calendar = () => {
               onSelectDate={handleSelectDate}
               range={range}
               hoverDate={hoverDate}
-              setHoverDate={setHoverDate}
+              saveNote={saveNote}
               notesMap={notesMap}
             />
           </div>

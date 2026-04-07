@@ -6,13 +6,7 @@
 ##  Live Demo
 
 
-> **URL:** [https://financial-dashboard-rho-kohl.vercel.app/](https://financial-dashboard-rho-kohl.vercel.app/)
-
----
-
-
-
-
+> **URL:** [https://tuf-assign.vercel.app/](https://tuf-assign.vercel.app/)
 
 ---
 
@@ -32,7 +26,9 @@ frontend/
 │   │   │   ├── ImageBanner.jsx
 │   │   │
 │   ├── utils/                    # Core logic
-│       └── dateUtils.js
+│   │  └── dateUtils.js
+│   ├── hooks/                    # Custom Notes hook
+│   │  └── useNotes.js
 │
 ├── public/                       # Static assets & screenshots
 │

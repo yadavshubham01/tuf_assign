@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 
-const NotesPanel = ({ range, currentDate ,setNotesMap }) => {
+const NotesPanel = ({ range, currentDate, saveNote }) => {
   const monthKey = `${currentDate.year}-${currentDate.month}`;
   const rangeKey =
-    range.start && range.end
-      ? `${range.start}_${range.end}`
-      : null;
+    range.start && range.end ? `${range.start}_${range.end}` : null;
 
   const storageKey = rangeKey || monthKey;
 
@@ -13,29 +11,22 @@ const NotesPanel = ({ range, currentDate ,setNotesMap }) => {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-  const allNotes = JSON.parse(localStorage.getItem("notes-map") || "{}");
-  setDraft(allNotes[storageKey] || "");
-  }, [storageKey]);
+    setDraft(notesMap[storageKey] || "");
+  }, [storageKey, notesMap]);
 
   const handleSave = () => {
-  const allNotes = JSON.parse(localStorage.getItem("notes-map") || "{}");
+    saveNote(storageKey, draft);
 
-  allNotes[storageKey] = draft;
-
-  localStorage.setItem("notes-map", JSON.stringify(allNotes));
-  setNotesMap({...allNotes})
-  setSaved(true);
-  setTimeout(() => setSaved(false), 1200);
-};
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1200);
+  };
 
   return (
     <div className="flex flex-col gap-2">
       <h3 className="font-semibold text-sm">Notes</h3>
 
       <p className="text-xs text-gray-500">
-        {rangeKey
-          ? "Notes for selected range"
-          : "Notes for this month"}
+        {rangeKey ? "Notes for selected range" : "Notes for this month"}
       </p>
 
       <textarea
@@ -61,11 +52,7 @@ const NotesPanel = ({ range, currentDate ,setNotesMap }) => {
         </button>
       </div>
 
-      {saved && (
-        <span className="text-green-500 text-xs">
-          Saved ✓
-        </span>
-      )}
+      {saved && <span className="text-green-500 text-xs">Saved ✓</span>}
     </div>
   );
 };
