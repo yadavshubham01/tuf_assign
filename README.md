@@ -42,7 +42,30 @@ frontend/
 
 ##  Core Features
 
-
+* **Wall Calendar UI**
+Clean, aesthetic layout inspired by real-world wall calendars with image + notes + date grid.
+* **Dynamic Image Banner**
+Displays contextual images based on the current month with auto theme color extraction.
+* **Date Range Selection**
+Select start and end dates with visual highlighting and hover preview.
+* **Integrated Notes System**
+Add notes for:
+Entire month
+Selected date range
+Notes are persisted using localStorage.
+* **Notes Visualization**
+Dates with notes are highlighted on the calendar with visual indicators.
+* **Tooltip Preview**
+Hover over dates to view note content instantly (desktop).
+* **Mobile Friendly Interaction**
+Tap on dates to view notes (mobile fallback for tooltip).
+* **Real-Time Updates**
+Notes reflect instantly without page reload using centralized state management.
+* **Dynamic Theming**
+UI adapts color based on image (Spotify-like experience).
+* **Fully Responsive Design**
+Desktop: Split layout (image + notes + calendar)
+Mobile: Stacked layout with touch-friendly interactions
 
 ---
 
@@ -81,11 +104,6 @@ npm run dev
 
 App will be available at:
  `http://localhost:5173`
-
-
-
-
-
 
 
 ##  Author
