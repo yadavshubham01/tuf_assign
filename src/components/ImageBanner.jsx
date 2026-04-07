@@ -1,3 +1,17 @@
+/**
+ * ImageBanner Component - Dynamic Calendar Hero Section
+ *
+ * Displays a contextual image based on the current month and the calendar dynamically.
+ *
+ * Features:
+ * - Dynamic image selection per month
+ * - Overlay styling with gradient and month/year display
+ * - Smooth image scaling animation on hover
+ *
+ * Props:
+ * @param {Object} currentDate - Contains { month, year }
+ *
+ */
 
 const months = [
   "January","February","March","April","May","June",
@@ -20,14 +34,14 @@ const ImageBanner = ({ currentDate }) => {
 
       <img
         src={selectedImage}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
       />
 
       {/* BLUE SHAPE OVERLAY */}
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-[var(--primary)] clip-shape"></div>
+     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
 
       {/* TEXT */}
-      <div className="absolute bottom-6 right-6 text-white text-right">
+      <div className="absolute bottom-6 right-6 text-white text-right drop-shadow-lg">
         <p className="text-sm">{currentDate.year}</p>
         <h2 className="text-xl font-bold">
           {months[currentDate.month]}

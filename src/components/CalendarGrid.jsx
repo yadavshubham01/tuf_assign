@@ -1,3 +1,39 @@
+/**
+ * CalendarGrid Component - Interactive Date Grid
+ *
+ * Renders the calendar days for a given month and handles user interaction
+ * including range selection, hover preview, and note visualization.
+ *
+ * Features:
+ * - Dynamic grid generation based on month/year
+ * - Range selection highlighting (start, end, in-between)
+ * - Hover preview for range selection
+ * - Notes integration (date, range, and monthly notes)
+ * - Tooltip preview for notes (desktop)
+ * - Mobile fallback interaction (tap → alert)
+ *
+ * Props:
+ * @param {Object} currentDate - { month, year }
+ * @param {Function} onSelectDate - Callback when date is selected
+ * @param {Object} range - Selected range { start, end }
+ * @param {string|null} hoverDate - Hovered date
+ * @param {Function} setHoverDate - Updates hover state
+ * @param {Object} notesMap - Stored notes keyed by date/range/month
+ *
+ * State:
+ * @state {Object|null} hoveredNote - Tooltip note { date, text }
+ *
+ * Methods:
+ * @function isInRange - Checks if date lies within selected range
+ * @function isPreview - Handles hover-based preview range
+ * @function getNoteForDate - Resolves note for a given date
+ *
+ * UX Behavior:
+ * - Hover shows tooltip (desktop)
+ * - Click shows alert (mobile fallback)
+ * - Notes visually highlighted with indicator
+ */
+
 import { useState } from "react";
 import { getDaysInMonth, getFirstDayOfMonth } from "../utils/dateUtils";
 
@@ -110,28 +146,22 @@ const CalendarGrid = ({
           setHoveredNote(null);
         }}
         className={`
-          relative h-10 flex items-center justify-center text-sm rounded-lg cursor-pointer transition-all
-
-          ${isToday ? "border border-[var(--primary)]" : ""}
-
-          ${range.start === dateKey ? "bg-[var(--primary)] text-white rounded-full" : ""}
-          ${range.end === dateKey ? "bg-[var(--primary)] text-white rounded-full" : ""}
-
-          ${isInRange(dateKey) ? "bg-blue-200" : ""}
-          ${isPreview(dateKey) ? "bg-blue-100" : ""}
-
-          ${hasNote ? "bg-blue-200 border border-blue-300" : ""}
-
-          hover:scale-105 hover:text-[var(--primary)]
-        `}
+            relative h-10 flex items-center justify-center text-sm rounded-xl cursor-pointer
+            transition-all duration-200 ease-out
+            ${isToday ? "border border-[var(--primary)] font-semibold" : ""}
+            ${range.start === dateKey ? "bg-[var(--primary)] text-white rounded-full scale-105" : ""}
+            ${range.end === dateKey ? "bg-[var(--primary)] text-white rounded-full scale-105" : ""}
+            ${isInRange(dateKey) ? "bg-blue-200/70" : ""}
+            ${isPreview(dateKey) ? "bg-blue-100" : ""}
+            ${hasNote ? "bg-red-50 border border-red-300" : ""}
+            hover:bg-gray-100 hover:scale-110 hover:shadow-sm
+            `}
       >
         {day}
 
         {/* Tooltip */}
         {hoveredNote?.date === dateKey && (
-          <div
-            className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap"
-          >
+          <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap">
             {hoveredNote.text}
           </div>
         )}

@@ -12,6 +12,6 @@ body {
   clip-path: polygon(0 40%, 100% 0%, 100% 100%, 0% 100%);
 }
 
-canvas {
-  display: none !important;
+* {
+  transition: background 0.2s ease, color 0.2s ease;
 }

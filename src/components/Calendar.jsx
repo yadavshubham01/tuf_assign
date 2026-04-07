@@ -1,4 +1,28 @@
-import { useEffect, useState } from "react";
+/**
+ * Calendar Component - Wall Calendar Dashboard
+ *
+ * Core container component that manages calendar state, date navigation,
+ * and integrates all sub-components (Banner, Grid, Notes).
+ *
+ * Features:
+ * - Month navigation (prev/next)
+ * - Date range selection (start → end)
+ * - Hover preview for range selection
+ * - Centralized notes state via custom hook
+ * - Responsive wall calendar layout
+ *
+ * State:
+ * @state {Object} currentDate - Current visible month/year
+ * @state {Object} range - Selected date range { start, end }
+ * @state {string|null} hoverDate - Hovered date for preview range
+ *
+ * Methods:
+ * @function handleSelectDate - Handles range selection logic
+ * @function setCurrentDate - Updates month/year navigation
+ *
+ */
+
+import {  useState } from "react";
 import ImageBanner from "./ImageBanner";
 import CalendarHeader from "./CalendarHeader";
 import CalendarGrid from "./CalendarGrid";
@@ -31,8 +55,8 @@ const Calendar = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 p-4">
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
+      <div className="w-full max-w-xl bg-white/90 backdrop-blur rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
 
         {/* TOP IMAGE */}
         <ImageBanner currentDate={currentDate} />

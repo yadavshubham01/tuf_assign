@@ -1,3 +1,14 @@
+/**
+ *  Simple Header Component
+ *  
+ *  Renders the calendar Month with Button next and prev 
+ *  
+ *  * Props:
+ *  @param {Object} currentDate - Current month/year
+ *  @param {Function} onPrev - Change month to prev month
+ *  @param {Function} onNext - Change month to next month
+ */
+
 import { MONTHS } from "../utils/dateUtils";
  
 const CalendarHeader = ({ currentDate, onPrev, onNext }) => {
