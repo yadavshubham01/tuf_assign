@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const NotesPanel = ({ range, currentDate, saveNote }) => {
+const NotesPanel = ({ range, currentDate, notesMap,saveNote }) => {
   const monthKey = `${currentDate.year}-${currentDate.month}`;
   const rangeKey =
     range.start && range.end ? `${range.start}_${range.end}` : null;

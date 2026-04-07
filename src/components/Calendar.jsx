@@ -41,7 +41,7 @@ const Calendar = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
 
           {/* LEFT NOTES */}
-          <NotesPanel range={range} currentDate={currentDate} saveNote={saveNote}/>
+          <NotesPanel range={range} currentDate={currentDate} notesMap={notesMap} saveNote={saveNote}/>
 
           {/* RIGHT CALENDAR */}
           <div>
@@ -68,7 +68,7 @@ const Calendar = () => {
               onSelectDate={handleSelectDate}
               range={range}
               hoverDate={hoverDate}
-              saveNote={saveNote}
+              setHoverDate={setHoverDate}
               notesMap={notesMap}
             />
           </div>
