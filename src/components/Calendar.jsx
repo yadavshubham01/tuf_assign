@@ -28,6 +28,7 @@ import CalendarHeader from "./CalendarHeader";
 import CalendarGrid from "./CalendarGrid";
 import NotesPanel from "./NotesPanel";
 import { useNotes } from "../hooks/useNotes";
+import { SpiralBinding } from "./SpiralBinding";
 
 const Calendar = () => {
   const today = new Date();
@@ -56,45 +57,49 @@ const Calendar = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
-      <div className="w-full max-w-xl bg-white/90 backdrop-blur rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+      <div className="relative w-full max-w-xl flex flex-col items-center">
 
-        {/* TOP IMAGE */}
-        <ImageBanner currentDate={currentDate} />
+        <div className="w-full bg-white/90 backdrop-blur rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
 
-        {/* BOTTOM SECTION */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-
-          {/* LEFT NOTES */}
-          <NotesPanel range={range} currentDate={currentDate} notesMap={notesMap} saveNote={saveNote}/>
-
-          {/* RIGHT CALENDAR */}
-          <div>
-            <CalendarHeader
-              currentDate={currentDate}
-              onPrev={() =>
-                setCurrentDate((p) =>
-                  p.month === 0
-                    ? { month: 11, year: p.year - 1 }
-                    : { ...p, month: p.month - 1 }
-                )
-              }
-              onNext={() =>
-                setCurrentDate((p) =>
-                  p.month === 11
-                    ? { month: 0, year: p.year + 1 }
-                    : { ...p, month: p.month + 1 }
-                )
-              }
-            />
-
-            <CalendarGrid
-              currentDate={currentDate}
-              onSelectDate={handleSelectDate}
+          <SpiralBinding />
+          <div className="overflow-hidden rounded-t-xl">
+            <ImageBanner currentDate={currentDate} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+            <NotesPanel
               range={range}
-              hoverDate={hoverDate}
-              setHoverDate={setHoverDate}
+              currentDate={currentDate}
               notesMap={notesMap}
+              saveNote={saveNote}
             />
+            <div>
+              <CalendarHeader
+                currentDate={currentDate}
+                onPrev={() =>
+                  setCurrentDate((p) =>
+                    p.month === 0
+                      ? { month: 11, year: p.year - 1 }
+                      : { ...p, month: p.month - 1 }
+                  )
+                }
+                onNext={() =>
+                  setCurrentDate((p) =>
+                    p.month === 11
+                      ? { month: 0, year: p.year + 1 }
+                      : { ...p, month: p.month + 1 }
+                  )
+                }
+              />
+
+              <CalendarGrid
+                currentDate={currentDate}
+                onSelectDate={handleSelectDate}
+                range={range}
+                hoverDate={hoverDate}
+                setHoverDate={setHoverDate}
+                notesMap={notesMap}
+              />
+            </div>
           </div>
         </div>
       </div>
