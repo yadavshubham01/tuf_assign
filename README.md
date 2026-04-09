@@ -1,6 +1,6 @@
 #  Wall Calendar Aesthetic 
 
-![Wall Calendar Aesthetic](./public/sample.png)
+![Wall Calendar Aesthetic](./public/Sample1.png)
 
 
 ##  Live Demo
